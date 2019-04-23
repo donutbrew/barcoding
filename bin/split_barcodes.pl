@@ -34,11 +34,19 @@ use File::Basename;
 use File::Path;
 use POSIX;
 
-our $VERSION = q[1.0.0];
+our $VERSION = q[2.0.0];
 
 Readonly::Scalar my $SEQ_LENGTH   => 200;
 Readonly::Scalar my $MATCH_WITHIN => 150;
 Readonly::Scalar my $STRINGENCY   => 6; #cp change 13->6
+
+
+$SIG{'INT'} = sub {
+    kill( 'TERM', -$$ );
+};
+
+
+
 
 my $opts = {};
 GetOptions( $opts, qw(help barcodes=s threads=i stringency=i keep require_both enforce_orientation check_hybrid verbose) );
